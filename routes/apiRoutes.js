@@ -21,7 +21,7 @@ const nfcOdds = () => {
     return $.ajax({
         'url': 'http://api.sportsdata.io/v3/nfl/odds/json/BettingFuturesBySeason/' + '2020' + sportDataApiKey,
         'method': 'GET'
-      }); 
+      });
   } catch (err) {
     console.log(err);
   }
