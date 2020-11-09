@@ -1,0 +1,228 @@
+<body>
+  <header class="container" role="header">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <img class="mx-auto" src="" width="70" height="80"></img>
+    </nav>
+  </header>
+  <div class="container">
+    <div id="futures-market" class="container-fluid mb-1">
+      <div class="row justify-content-center mb-2">
+        <button id="sb-winner-btn" class="btn btn-outline-dark btn-sm col-sm-3" type="button"
+          data-toggle="collapse" data-target="#sb-winner-odds" aria-expanded="false" aria-controls="collapse">
+          Super Bowl
+        </button>
+        <button id="afc-winner-btn" class="btn btn-outline-dark btn-sm col-sm-3  mx-0 mx-sm-1 my-1 my-sm-0" type="button"
+          data-toggle="collapse" data-target="#afc-winnner-odds" aria-expanded="false" aria-controls="collapse">
+          AFC
+        </button>
+        <button id="nfc-winner-btn" class="btn btn-outline-dark btn-sm col-sm-3" type="button" data-toggle="collapse"
+          data-target="#nfc-winner-odds" aria-expanded="false" aria-controls="collapse">
+          NFC
+        </button>
+      </div>
+      <div class="row mb-1">
+        <div id="sb-winner-odds" class="collapse col-12 text-center border"></div>
+        <div id="afc-winnner-odds" class="collapse col-12 text-center border"></div>
+        <div id="nfc-winner-odds" class="collapse col-12 text-center border"></div>
+      </div>
+    </div>
+
+
+    <div id="pre-game-div"></div>
+    <div id="live-game-div"></div>
+    <div id="completed-game-div">
+      {{#each this}}
+      <div class='container-fluid card my-3 border completeGameCard' id={{scoreID}}>
+          <div class='row card-body'>
+              <img class='col-1 card-img' src={{awayTeamLogo}} id='awayTeamLogoComplete'>
+              <div class='col-4 font-weight-bold'>{{awayTeamFullName}}</div>
+              <div class='col-2'>{{awayScore}}</div>
+              <div class='col-5' id='awayHeadCoach'>{{awayHeadCoach}} {{#if homeWon}}(L){{else}}(W){{/if}}</div>
+          </div>
+          
+          <div class='row card-body'>
+              <img class='col-1 card-img' src={{homeTeamLogo}} id='homeTeamLogoComplete'>
+              <div class='col-4 font-weight-bold'>{{homeTeamFullName}}</div>
+              <div class='col-2'>{{homeScore}}</div>
+              <div class='col-5' id='homeHeadCoach'>{{homeHeadCoach}} {{#if homeWon}}(W){{else}}(L){{/if}}</div>
+          </div>
+      </div>
+      {{/each}}
+    </div>
+
+    {{!-- News Feed --}}
+
+
+    {{!-- Pre-Game Modal --}}
+    <div id="pre-game-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pre-game-modal"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="container-fluid">
+            <div class="row modal-header">
+              <h5 class="col-12 modal-title text-center font-weight-bold text-uppercase">Pre-Game Odds</h5>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row text-center mb-1">
+                {{!-- begin header row --}}
+                <div class="col-1"></div> {{!-- end empty, spacer div --}}
+                <div class="col-4 border-bottom font-weight-bold">Spread</div> {{!-- end game spread --}}
+                <div class="col-3 border-bottom font-weight-bold">Moneyline</div> {{!-- end money line --}}
+                <div class="col-4 border-bottom font-weight-bold">Total</div> {{!-- end game total --}}
+              </div> {{!-- end header row --}}
+
+              <div class="row text-center">
+                {{!-- begin away/UNDER details row --}}
+                <img id="away-team-logo-pre-modal" class="col-1 mr-2"></img> {{!-- end away logo --}}
+                <div class="col-4">
+                  {{!-- begin away spread box --}}
+                  <div class="container-fluid">
+                    <div class="row">
+                      {{!-- begin away spread row --}}
+                      <div id="away-team-spread-pre" class="col-12 border"></div> {{!-- away spread --}}
+                    </div> {{!-- end away spread row --}}
+                    <div class="row">
+                      {{!-- begin away spread odds row --}}
+                      <div id="away-team-spread-odds-pre" class="col-12 border mt-2"></div> {{!-- away spread odds --}}
+                    </div> {{!-- end away spread odds row --}}
+                  </div>
+                </div> {{!-- end away spread box --}}
+                <div id="away-team-ml-pre" class="col-3 border my-auto"></div> {{!-- away money line --}}
+                <div class="col-4">
+                  {{!-- begin UNDER totals box  --}}
+                  <div class="container-fluid">
+                    <div class="row">
+                      {{!-- begin UNDER totals row --}}
+                      <div id="under-total-pre" class="col-12 border"></div> {{!-- UNDER totals --}}
+                    </div> {{!-- end UNDER totals row --}}
+                    <div class="row">
+                      {{!-- begin UNDER totals odds row --}}
+                      <div id="under-ml-pre" class="col-12 border mt-2"></div> {{!-- UNDER totals odds --}}
+                    </div> {{!-- end UNDER totals odds row --}}
+                  </div>
+                </div> {{!-- end UNDER totals box  --}}
+              </div> {{!-- end away/UNDER details row  --}}
+
+              <div class="container my-4">
+                <div class="row">
+                  <hr class="col-5">
+                  <div class="col-2 inline-block text-center">
+                    <i class="fas fa-football-ball"></i>
+                  </div>
+                  <hr class="col-5">
+                </div>
+              </div>
+
+              <div class="row text-center mb-1">
+                {{!-- begin home/OVER details row --}}
+                <img id="home-team-logo-pre-modal" class="col-1 mr-2"></img> {{!-- end home logo --}}
+                <div class="col-4 text-center">
+                  {{!-- begin home spread box --}}
+                  <div class="container-fluid">
+                    <div class="row">
+                      {{!-- begin home spread row --}}
+                      <div id="home-team-spread-pre" class="col-12 border"></div> {{!-- home spread --}}
+                    </div> {{!-- end home spread row --}}
+                    <div class="row">
+                      {{!-- begin home spread odds row --}}
+                      <div id="home-team-spread-odds-pre" class="col-12 border mt-2"></div> {{!-- home spread odds --}}
+                    </div> {{!-- end home spread odds row --}}
+                  </div>
+                </div> {{!-- end home spread box --}}
+                <div id="home-team-ml-pre" class="col-3 border my-auto"></div> {{!-- home money line --}}
+                <div class="col-4">
+                  {{!-- begin OVER totals box  --}}
+                  <div class="container-fluid">
+                    <div class="row">
+                      {{!-- begin OVER totals row --}}
+                      <div id="over-total-pre" class="col-12 border"></div> {{!-- OVER totals --}}
+                    </div> {{!-- end OVER totals row --}}
+                    <div class="row">
+                      {{!-- begin OVER totals odds row --}}
+                      <div id="over-ml-pre" class="col-12 border mt-2"></div> {{!-- OVER totals odds --}}
+                    </div> {{!-- end OVER totals odds row --}}
+                  </div>
+                </div> {{!-- end OVER totals box  --}}
+              </div> {{!-- end home/OVER details row  --}}
+            </div> {{!-- end modal body container --}}
+          </div> {{!-- end of modal body div --}}
+        </div> {{!-- end of modal content --}}
+      </div> {{!-- end of modal dialog div --}}
+    </div> {{!-- end pre-game modal div --}}
+
+    {{!-- Live-Game Modal --}}
+    <div id="live-game-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="live-game-modal"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="container-fluid">
+            <div class="row modal-header">
+              <h5 class="col-12 modal-title text-center font-weight-bold text-uppercase">Live-Game Odds</h5>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row text-center mb-1">
+                {{!-- begin header row --}}
+                <div class="col-1"></div> {{!-- end empty, spacer div --}}
+                <div class="col-5 border-bottom font-weight-bold">Spread</div> {{!-- end live game spread --}}
+                <div class="col-6 border-bottom font-weight-bold">Moneyline</div> {{!-- end live money line --}}
+              </div> {{!-- end header row --}}
+
+              <div class="row text-center">
+                {{!-- begin live away/UNDER details row --}}
+                <img id="away-team-logo-live-modal" class="col-1 mr-2"></img> {{!-- end away logo --}}
+                <div class="col-5">
+                  {{!-- begin live away spread box --}}
+                  <div class="container-fluid">
+                    <div class="row">
+                      {{!-- begin live away spread row --}}
+                      <div id="away-team-spread-live" class="col-12 border"></div> {{!-- live away spread --}}
+                    </div> {{!-- end live away spread row --}}
+                    <div class="row">
+                      {{!-- begin live away spread odds row --}}
+                      <div id="away-team-spread-odds-live" class="col-12 border mt-2"></div> {{!-- live away spread odds --}}
+                    </div> {{!-- end live away spread odds row --}}
+                  </div>
+                </div> {{!-- end live away spread box --}}
+                <div id="away-team-ml-live" class="col-6 border my-auto"></div> {{!-- away live money line --}}
+              </div> {{!-- end live away/UNDER details row  --}}
+
+              <div class="container my-4">
+                <div class="row">
+                  <hr class="col-5">
+                  <div class="col-2 inline-block text-center">
+                    <i class="fas fa-football-ball"></i>
+                  </div>
+                  <hr class="col-5">
+                </div>
+              </div>
+
+              <div class="row text-center mb-1">
+                {{!-- begin home details row --}}
+                <img id="home-team-logo-live-modal" class="col-1 mr-2"></img> {{!-- end home logo --}}
+                <div class="col-5">
+                  {{!-- begin home spread box --}}
+                  <div class="container-fluid">
+                    <div class="row">
+                      {{!-- begin live home spread row --}}
+                      <div id="home-team-spread-live" class="col-12 border"></div> {{!-- live home spread --}}
+                    </div> {{!-- end live home spread row --}}
+                    <div class="row">
+                      {{!-- begin live home spread odds row --}}
+                      <div id="home-team-spread-odds-live" class="col-12 border mt-2"></div> {{!-- home live spread odds --}}
+                    </div> {{!-- end live home spread odds row --}}
+                  </div>
+                </div> {{!-- end live home spread box --}}
+                <div id="home-team-ml-live" class="col-6 border my-auto"></div> {{!-- live home money line --}}
+              </div> {{!-- end home details row  --}}
+            </div> {{!-- end live modal body container --}}
+          </div> {{!-- end live modal body div --}}
+        </div> {{!-- end live modal content --}}
+      </div> {{!-- end live modal dialog div --}}
+    </div> {{!-- end live modal div --}}
+</body>
+
+</html>

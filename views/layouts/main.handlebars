@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracking Football Scores and Odds</title>
+  {{!-- bootstrap --}}
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  {{!-- font awesome --}}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+	<body>
+		{{{ body }}}
+		
+		{{!-- jQuery first, then Popper.js, then Bootstrap JavaScript, then user logic.js file --}}
+    <script src="/js/jquery.min.js"></script>
+    {{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> --}}
+    <script src="/js/bootstrap.min.js"></script>
+    {{!-- scrollspy jQuery functionality per Bootstrap documentation --}}
+    <script>
+      $('[data-spy="scroll"]').each(function () {
+        let $spy = $(this).scrollspy('refresh');
+      });
+    </script>
+    {{!-- moment.js library added for date conversions --}}
+    <script src="/js/moment.js"></script>
+    <script src="/js/logic.js"></script>
+	</body>
+</html>

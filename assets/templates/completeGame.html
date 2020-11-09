@@ -1,0 +1,20 @@
+<script id="completedGame-template" type="text/x-handlebars-template">
+    {{#each this}}
+    <div class='container-fluid card my-3 border completeGameCard' id={{scoreID}}>
+        <div class='row card-body'>
+            <img class='col-1 card-img' src={{awayTeamLogo}} id='awayTeamLogoComplete'>
+            <div class='col-4 font-weight-bold'>{{awayTeamFullName}}</div>
+            <div class='col-2'>{{awayScore}}</div>
+            <div class='col-5' id='awayHeadCoach'>{{awayHeadCoach}} {{#if homeWon}}(L){{else}}(W){{/if}}</div>
+        </div>
+        
+        <div class='row card-body'>
+            <img class='col-1 card-img' src={{homeTeamLogo}} id='homeTeamLogoComplete'>
+            <div class='col-4 font-weight-bold'>{{homeTeamFullName}}</div>
+            <div class='col-2'>{{homeScore}}</div>
+            <div class='col-5' id='homeHeadCoach'>{{homeHeadCoach}} {{#if homeWon}}(W){{else}}(L){{/if}}</div>
+        </div>
+    </div>
+    {{/each}}
+  </script>
+  

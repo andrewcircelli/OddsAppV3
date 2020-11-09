@@ -1,0 +1,22 @@
+<div class="container my-5">
+  <div class="row">
+      <div class="col-sm-2">
+          <div id="headlines" class="list-group">
+              <a id="today" class="list-group-item list-group-item-light list-group-item-action" href="#content-0">Current</a>
+              <a id="yesterday" class="list-group-item list-group-item-light list-group-item-action" href="#content-1">Yesterday</a>
+              <a id="twoDaysAgo" class="list-group-item list-group-item-light list-group-item-action" href="#content-2">Catchup</a>
+          </div>                                                     <!-- end headlines list-group, "table of contents "-->
+      </div>                                                         <!-- end col-2 -->
+      <div class="col-sm-10">
+          <div data-spy="scroll" data-target="#headlines" data-offset="0" class="news">
+              <div id="content-0"></div>
+              <h5 class="text-bold text-body mb-1">{{headline}}</h5>
+              <p>{{story}}</p>
+              <a class="btn btn-outline-dark btn-sm mb-3" href={{link}} role="button">Continue</a>
+              <div id="content-1"></div>
+              <div id="content-2"></div>
+          </div>                                                     <!-- end spy-->
+      </div>                                                         <!-- end col-10 -->
+  </div>                                                             <!-- end row -->
+</div>                                                               <!-- end container -->
+</div>                                                               <!-- end of body container-fluid -->

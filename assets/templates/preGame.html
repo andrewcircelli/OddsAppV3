@@ -1,0 +1,20 @@
+<script id="preGame-template" type="text/x-handlebars-template">
+    {{#each this}}
+    <div class='container-fluid text-center card preGameCard mb-3' id={{scoreID}}>
+        <div class='row card-body'>
+            <img class='col-1 card-img' src={{awayTeamLogo}} id='awayTeamLogoPre'>
+            <div class='col-4 font-weight-bold'>{{awayTeamFullName}}</div>
+            <div class='col-6'>{{stadiumName}} - {{stadiumCity}}, {{stadiumState}}</div>
+            <div class='col-1'>{{channel}}</div>
+  
+        </div>
+        
+        <div class='row card-body'>
+            <img class='col-1 card-img' src={{homeTeamLogo}} id='homeTeamLogoPre'>
+            <div class='col-4 font-weight-bold'>{{homeTeamFullName}}</div>
+            <div class='col-6'>{{dateTime}}</div>
+            <i class="col-1 preGameModalBtn fas fa-football-ball my-auto" data-toggle="modal" data-target="#pre-game-modal" id="{{scoreID}}"></i>
+        </div>
+    </div>
+    {{/each}}
+</script>
