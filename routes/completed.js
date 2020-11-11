@@ -1,7 +1,7 @@
 const express = require('express');
-const axios = require('axios').default;
 
 const router = express.Router();
+const axios = require('axios').default;
 
 const getCompletedGames = (year, week) => {
   try {
@@ -11,13 +11,28 @@ const getCompletedGames = (year, week) => {
   }
 };
 
+const getTeamDetails = () => {
+  try {
+    return axios.get(`https://api.sportsdata.io/v3/nfl/scores/json/AllTeams?key=acf8068f55284fd4afd0b96f698b5b32`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const completedGamesArr = [];
 
 router.get('/:year/:week', async (req, res, next) => {
+  // handle bad request
+  if (!req.params.year || !req.params.week) {
+    res.status(400).send('Request URL should end in /NFL/[YEAR]/[WEEK]');
+    return;
+  }
+  const { year } = req.params;
+  const { week } = req.params;
   const completedGamesResArr = await getCompletedGames(year, week);
-  const { data } = completedGamesResArr;
-  const completedGamesDataArr = data.filter((gameEl) => gameEl.Status === 'Final');
-  completedGamesDataArr.forEach((completedGameEl) => {
+  const completedGamesDataArr = completedGamesResArr.data;
+  const completedGamesFilteredArr = completedGamesDataArr.filter((gameEl) => gameEl.Status === 'Final');
+  completedGamesFilteredArr.forEach((completedGameEl) => {
     const scoreCheck = (completedGameEl.HomeScore > completedGameEl.AwayScore);
     completedGamesArr.push({
       homeWon: scoreCheck,
@@ -38,10 +53,22 @@ router.get('/:year/:week', async (req, res, next) => {
       stadiumState: completedGameEl.StadiumDetails.State
     });
   });
-  // res.status(200).json({
-  //   message: `Handling GET request for year: ${year} and week: ${week}`,
-  //   curatedData: completedGamesArr
-  // });
+  const teamDetailsResArr = await getTeamDetails();
+  const teamDetailsDataArr = teamDetailsResArr.data;
+  teamDetailsDataArr.forEach((teamDetailEl) => {
+    const teamID = teamDetailEl.TeamID;
+    completedGamesArr.forEach((gameEl) => {
+      if (teamID === gameEl.homeTeamID) {
+        gameEl.homeTeamFullName = teamDetailEl.FullName;
+        gameEl.homeTeamLogo     = teamDetailEl.WikipediaLogoUrl;
+        gameEl.homeHeadCoach    = teamDetailEl.HeadCoach;
+      } else if (teamID === gameEl.awayTeamID) {
+        gameEl.awayTeamFullName = teamDetailEl.FullName;
+        gameEl.awayTeamLogo     = teamDetailEl.WikipediaLogoUrl;
+        gameEl.awayHeadCoach    = teamDetailEl.HeadCoach;
+      }
+    });
+  });
   res.render('index', completedGamesArr);
 });
 

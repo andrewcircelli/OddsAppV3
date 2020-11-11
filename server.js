@@ -5,8 +5,6 @@
 const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const { response } = require('express');
-const axios = require('axios').default;
 
 // ==============================================================================
 // EXPRESS CONFIGURATION
@@ -29,14 +27,29 @@ app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dis
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
 
-// Set Handlebars as the default templating engine.
+// Set Handlebars as the default templating engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+app.set('views', __dirname, '/views');
 
 const completeAPI = require('./routes/completed');
 
-app.use('/', completeAPI);
-app.use('/', otherAPI);
+app.use('/NFL', completeAPI);
+app.use((req, res, next) => {
+  const err = new Error('Page Not Found!');
+  err.status = 404;
+  next(err);
+});
+app.use((err, req, res, next) => {
+  // assign error status to the error that has been passed from the above middleware
+  // or if the error originated in another portion of app, assign 500 status
+  res.status(err.status || 500);
+  res.json({
+    err: {
+      message: err.message
+    }
+  });
+});
 
 // LISTENER
 // The below code effectively 'starts' our server
