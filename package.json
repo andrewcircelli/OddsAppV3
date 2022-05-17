@@ -1,6 +1,6 @@
 {
-  "name": "livescoresandodds",
-  "version": "1.0.0",
+  "name": "odds-app-v3",
+  "version": "3.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
